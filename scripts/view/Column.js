@@ -1,8 +1,12 @@
 import KanbanAPI from "../API/KanbanAPI.js";
+import DropZone from "./DropZone.js"
 import Item from "./Item.js";
+
 
 export default class Column {
     constructor(id, title) {
+        const topDropZone = DropZone.createDropZone();
+
         this.elements = {};
         this.elements.root = Column.createRoot();
         this.elements.title = this.elements.root.querySelector(".kanban-column-title");
@@ -11,6 +15,7 @@ export default class Column {
 
         this.elements.root.dataset.id = id;
         this.elements.title.textContent = title;
+        this.elements.items.appendChild(topDropZone);
 
         this.elements.addItem.addEventListener("click", () => {
             const newItem = KanbanAPI.insertItem(id, "");
@@ -32,7 +37,7 @@ export default class Column {
             <div class="kanban-column">
                 <div class="kanban-column-title"></div>
                 <div class="kanban-column-items"></div>
-                <button class="kanban-add-item" >+ add</button>
+                <button class="kanban-add-item" type="button">+ add</button>
             </div> 
         `).children[0];
     }
